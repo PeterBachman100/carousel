@@ -8,6 +8,45 @@
         <script defer src="index.js"></script>
     </head>
     <body>
-        
+        <div class="carousel">
+            <div class="carousel__track">
+                <div class="carousel__item">
+                        <picture>
+                            <!-- Desktop -->
+                            <source
+                                media="(min-width: 1200px)"
+                                srcset="
+                                    assets/clouds-desktop-1600.jpg 1600w,
+                                    assets/clouds-desktop-2000.jpg 2000w,
+                                    assets/clouds-desktop-2400.jpg 2400w
+                                "
+                            >
+                            <!-- Laptop -->
+                            <source
+                                media="(min-width: 1000px)"
+                                srcset="
+                                    assets/clouds-laptop-1200.jpg 1200w,
+                                    assets/clouds-laptop-1600.jpg 1600w
+                                " 
+                            >
+                            <!-- Tablet -->
+                            <source
+                                media="(min-width: 600px)"
+                                srcset="
+                                    assets/clouds-tablet-800.jpg 800w,
+                                    assets/clouds-tablet-1200.jpg 1200w
+                                "
+                            >
+                            <!-- Mobile -->
+                            <img
+                                src="assets/clouds-mobile-480.jpg"
+                                srcset="assets/clouds-mobile-480.jpg 480w, assets/clouds-mobile-900.jpg 900w"
+                                loading="lazy"
+                                alt="A sunrise above a cloud inversion amongst jagged rocky and snowy mountains"
+                            >
+                        </picture>
+                </div>
+            </div>
+        </div>
     </body>
 </html>
