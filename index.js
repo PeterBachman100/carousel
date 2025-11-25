@@ -1,5 +1,13 @@
 const slides = document.getElementsByClassName('carousel__slide');
+const carousel__track = document.querySelector('.carousel__track');
 let currentSlide = 1;
+
+const dots = document.querySelectorAll('.carousel__dots button');
+udpateDots();
+
+document.querySelector('.carousel__previous').addEventListener('click', previous);
+document.querySelector('.carousel__next').addEventListener('click', next);
+
 
 function next() {
     if(currentSlide === slides.length) {
@@ -9,6 +17,7 @@ function next() {
     }
     updateCarouselTrackPosition();
 }
+
 function previous() {
     if(currentSlide === 1) {
         currentSlide = slides.length;
@@ -17,19 +26,27 @@ function previous() {
     }
     updateCarouselTrackPosition();
 }
+
 function updateCarouselTrackPosition() {
-    document.querySelector('.carousel__track').style.transform = `translateX(${-100 * (currentSlide - 1)}%)`;
+    carousel__track.style.transform = `translateX(${-100 * (currentSlide - 1)}%)`;
+    udpateDots();
 }
+
+function udpateDots() {
+    dots.forEach((dot) => {
+        dot.classList.remove('carousel__dots--active');
+    });
+    dots[currentSlide - 1].classList.add('carousel__dots--active');
+}
+
 function jumpToSlide(slide) {
     currentSlide = slide;
     updateCarouselTrackPosition();
 }
 
-document.querySelector('.carousel__previous').addEventListener('click', previous);
-document.querySelector('.carousel__next').addEventListener('click', next);
-const dots = document.querySelectorAll('.carousel__dots button');
 dots.forEach((dot, index) => {
     dot.addEventListener('click', () => {
         jumpToSlide(index + 1);
     });
+    dot.setAttribute('data-slide', index);
 });
