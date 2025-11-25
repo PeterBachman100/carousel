@@ -1,0 +1,1 @@
+Practice Project: Building an image carousel component in vanilla JS
