@@ -1,16 +1,30 @@
-const slides = document.getElementsByClassName('carousel__slide');
-const carousel__track = document.querySelector('.carousel__track');
 let currentSlide = 1;
-
+const slides = document.getElementsByClassName('carousel__slide');
+const length = slides.length;
+const carousel__track = document.querySelector('.carousel__track');
+const button_previous = document.querySelector('.carousel__previous');
+const button_next = document.querySelector('.carousel__next');
 const dots = document.querySelectorAll('.carousel__dots button');
+
+carousel__track.style.width = `${length * 100}%`;
+
+button_previous.addEventListener('click', previous);
+button_next.addEventListener('click', next);
+
+dots.forEach((dot, index) => {
+    dot.addEventListener('click', () => {
+        jumpToSlide(index + 1);
+    });
+    dot.setAttribute('data-slide', index);
+});
+for(const slide of slides) {
+    slide.style.width = 100/length + '%';
+}
+
 udpateDots();
 
-document.querySelector('.carousel__previous').addEventListener('click', previous);
-document.querySelector('.carousel__next').addEventListener('click', next);
-
-
 function next() {
-    if(currentSlide === slides.length) {
+    if(currentSlide === length) {
         currentSlide = 1;
     } else {
         currentSlide++;
@@ -20,7 +34,7 @@ function next() {
 
 function previous() {
     if(currentSlide === 1) {
-        currentSlide = slides.length;
+        currentSlide = length;
     } else {
         currentSlide--;
     }
@@ -28,7 +42,7 @@ function previous() {
 }
 
 function updateCarouselTrackPosition() {
-    carousel__track.style.transform = `translateX(${-100 * (currentSlide - 1)}%)`;
+    carousel__track.style.transform = `translateX(${-100/length * (currentSlide - 1)}%)`;
     udpateDots();
 }
 
@@ -44,9 +58,3 @@ function jumpToSlide(slide) {
     updateCarouselTrackPosition();
 }
 
-dots.forEach((dot, index) => {
-    dot.addEventListener('click', () => {
-        jumpToSlide(index + 1);
-    });
-    dot.setAttribute('data-slide', index);
-});
