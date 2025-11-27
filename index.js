@@ -12,16 +12,18 @@ async function createCarousel(carouselWrapper) {
     const imagesData = await getImagesData(imagesDataSrc);
     
     const length = imagesData.length;
-    let currentSlide = 1;
+    let currentSlide = 2;
 
     let track = document.createElement('div');
     track.classList.add('carousel__track');
-    track.style.width = `${length * 100}%`;
+    track.style.width = `${(length + 2) * 100}%`;
+
+    let slides = [];
 
     for (const image of imagesData) {
         const slide = document.createElement('div');
         slide.classList.add('carousel__slide');
-        slide.style.width = 100/length + '%';
+        slide.style.width = 100/(length + 2) + '%';
 
         const picture = document.createElement('picture');
 
@@ -40,9 +42,18 @@ async function createCarousel(carouselWrapper) {
 
         picture.appendChild(imgElement);
         slide.appendChild(picture);
-        track.appendChild(slide);
+        slides.push(slide);
     }
 
+    const firstSlideClone = slides[0].cloneNode(true);
+    const lastSlideClone = slides[slides.length - 1].cloneNode(true);
+
+    slides.unshift(lastSlideClone);
+    slides.push(firstSlideClone);
+
+    slides.forEach((slide) => {
+        track.appendChild(slide);
+    });
     carouselWrapper.appendChild(track);
 
     const previousButton = document.createElement('button');
@@ -58,7 +69,7 @@ async function createCarousel(carouselWrapper) {
     const dots = document.createElement('div');
     dots.classList.add('carousel__dots');
     
-    for(let i = 1; i <= length; i++) {
+    for(let i = 2; i <= length + 1; i++) {
         const dot = document.createElement('button');
         dot.setAttribute('data-slide', i);
         dot.addEventListener('click', () => {
@@ -68,12 +79,11 @@ async function createCarousel(carouselWrapper) {
     }
     
     carouselWrapper.appendChild(dots);
-
-    udpateDots();
+    updateCarouselTrackPosition();
 
     function next() {
         if(currentSlide === length) {
-            currentSlide = 1;
+            currentSlide = 2;
         } else {
             currentSlide++;
         }
@@ -90,7 +100,7 @@ async function createCarousel(carouselWrapper) {
     }
 
     function updateCarouselTrackPosition() {
-        track.style.transform = `translateX(${-100/length * (currentSlide - 1)}%)`;
+        track.style.transform = `translateX(${-100/(length + 2) * (currentSlide - 1)}%)`;
         udpateDots();
     }
 
