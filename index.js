@@ -9,6 +9,8 @@ function carousel() {
 
 async function createCarousel(carouselWrapper) {
     const imagesDataSrc = carouselWrapper.getAttribute('data-images');
+    const transitionTime = carouselWrapper.getAttribute('data-transition');
+    const autoplay = carouselWrapper.getAttribute('data-autoplay');
     const imagesData = await getImagesData(imagesDataSrc);
     
     const length = imagesData.length;
@@ -17,6 +19,7 @@ async function createCarousel(carouselWrapper) {
     let track = document.createElement('div');
     track.classList.add('carousel__track');
     track.style.width = `${(length + 2) * 100}%`;
+    track.style.transition = `transform ${transitionTime}s ease`;
 
     let slides = [];
 
@@ -80,6 +83,9 @@ async function createCarousel(carouselWrapper) {
     
     carouselWrapper.appendChild(dots);
     updateCarouselTrackPosition();
+    if(autoplay === "true") {
+        setInterval(next, 2000);
+    }
 
     function specialMagic(track, destinationSlide) {
         function listener() {

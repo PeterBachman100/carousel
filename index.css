@@ -16,7 +16,7 @@
     height: 100%;
 }
 .carousel__track.no-transition {
-    transition: transform 0s;
+    transition: transform 0s !important;
 }
 
 .carousel__slide {
