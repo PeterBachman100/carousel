@@ -88,7 +88,7 @@ async function createCarousel(carouselWrapper) {
             updateCarouselTrackPosition();
             setTimeout(() => {
                 track.classList.remove('no-transition');
-            }, 1);
+            }, 0);
             
             track.removeEventListener('transitionend', listener);
         }
