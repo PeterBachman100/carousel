@@ -81,9 +81,25 @@ async function createCarousel(carouselWrapper) {
     carouselWrapper.appendChild(dots);
     updateCarouselTrackPosition();
 
+    function specialMagic(track, destinationSlide) {
+        function listener() {
+            track.classList.add('no-transition');
+            currentSlide = destinationSlide;
+            updateCarouselTrackPosition();
+            setTimeout(() => {
+                track.classList.remove('no-transition');
+            }, 1);
+            
+            track.removeEventListener('transitionend', listener);
+        }
+        track.addEventListener('transitionend', listener);
+    }
+
     function next() {
-        if(currentSlide === length) {
-            currentSlide = 2;
+        if(currentSlide === (length + 1)) {
+            specialMagic(track, 2);
+            currentSlide++;
+            updateCarouselTrackPosition();
         } else {
             currentSlide++;
         }
@@ -91,8 +107,10 @@ async function createCarousel(carouselWrapper) {
     }
 
     function previous() {
-        if(currentSlide === 1) {
-            currentSlide = length;
+        if(currentSlide === 2) {
+            specialMagic(track, length + 1);
+            currentSlide--;
+            updateCarouselTrackPosition();
         } else {
             currentSlide--;
         }
@@ -108,7 +126,7 @@ async function createCarousel(carouselWrapper) {
         for (const dot of dots.children) {
             dot.classList.remove('carousel__dots--active');
         }
-        dots.children[currentSlide - 1].classList.add('carousel__dots--active');
+        dots.children[currentSlide - 2].classList.add('carousel__dots--active');
     }
 
     function jumpToSlide(slide) {
