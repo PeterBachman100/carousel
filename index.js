@@ -11,6 +11,7 @@ async function createCarousel(carouselWrapper) {
     const imagesDataSrc = carouselWrapper.getAttribute('data-images');
     const transitionTime = carouselWrapper.getAttribute('data-transition');
     const autoplay = carouselWrapper.getAttribute('data-autoplay');
+    const autoplayInterval = carouselWrapper.getAttribute('data-autoplay-interval');
     const imagesData = await getImagesData(imagesDataSrc);
     
     const length = imagesData.length;
@@ -84,7 +85,7 @@ async function createCarousel(carouselWrapper) {
     carouselWrapper.appendChild(dots);
     updateCarouselTrackPosition();
     if(autoplay === "true") {
-        setInterval(next, 2000);
+        setInterval(next, autoplayInterval);
     }
 
     function specialMagic(track, destinationSlide) {
